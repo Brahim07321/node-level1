@@ -4,13 +4,23 @@ const Mydata = require("./models/mydataSchema"); // schema dyalek
 
 const app = express();
 const port = process.env.PORT || 3000;
+app.set('view engine', 'ejs');
 
 // bach n9ra data mn form
 app.use(express.urlencoded({ extended: true }));
 
 // الصفحة الرئيسية
 app.get("/", (req, res) => {
-  res.sendFile("./views/home.html", { root: __dirname });
+  Mydata.find()
+  .then((result) =>{
+    res.render("home", {mytitle: "home page", arr: result});
+  })
+  .catch((err) =>{
+    console.log(err);
+  });
+
+
+
 });
 
 app.get("/index.html", (req, res) => {
