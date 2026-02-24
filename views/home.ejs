@@ -4,25 +4,18 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>   <%=  mytitle %></title>
+    <link rel="stylesheet" href="/mystyle.css">
 </head>
 
 <body>
-    <style>
-        input
-        {
-          width: 300px;
-        }
-        button{
-            width: 300px;
-        }
-    </style>
+   
     <h1>hello bihi</h1>
     <form action="/" method="POST">
         <input type="text" name="usersNameee" placeholder="Enter your name" required>
         <button type="submit">Send</button>
       </form>
 
-      <%= arr.at(-1).UserNameee %>
+      <h1><%= arr.at(-1).UserNameee %></h1>
       
 </body>
 </html>

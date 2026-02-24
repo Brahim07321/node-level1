@@ -1,13 +1,15 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const Mydata = require("./models/mydataSchema"); // schema dyalek
-
 const app = express();
 const port = process.env.PORT || 3000;
 app.set('view engine', 'ejs');
-
 // bach n9ra data mn form
 app.use(express.urlencoded({ extended: true }));
+//public fulder
+app.use(express.static("public"));
+
+
 
 // الصفحة الرئيسية
 app.get("/", (req, res) => {
@@ -60,3 +62,20 @@ mongoose
   .catch((err) => {
     console.log("❌ MongoDB Connection Error:", err.message);
   });
+
+
+  //auto refrisch 
+  const path = require("path");
+const livereload = require("livereload");
+const liveReloadServer = livereload.createServer();
+liveReloadServer.watch(path.join(__dirname, 'public'));
+ 
+ 
+const connectLivereload = require("connect-livereload");
+app.use(connectLivereload());
+ 
+liveReloadServer.server.once("connection", () => {
+  setTimeout(() => {
+    liveReloadServer.refresh("/");
+  }, 100);
+});
