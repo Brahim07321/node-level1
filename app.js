@@ -11,8 +11,16 @@ app.use(express.static("public"));
 
 // Get reqeust
 app.get("/", (req, res) => {
-  res.render("index", {});
+  User.find()
+    .then((result) => {
+      res.render("index", {arr: result});
+    })
+    .catch((err) => {
+      console.log(err);
+    });
 });
+
+
 app.get("/user/add.html", (req, res) => {
   res.render("user/add", {});
 });
@@ -34,9 +42,8 @@ app.post("/user/add", (req, res) => {
   user
     .save()
     .then(() => {
-      res.redirect("/user/add");
+      res.redirect("/");
       console.log(req.body);
-
     })
     .catch((err) => {
       console.log(err);
