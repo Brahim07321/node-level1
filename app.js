@@ -1,43 +1,47 @@
 const express = require("express");
 const mongoose = require("mongoose");
-const Mydata = require("./models/mydataSchema"); // schema dyalek
+const User = require("./models/CustomerSchema"); // schema dyalek
 const app = express();
 const port = process.env.PORT || 3000;
-app.set('view engine', 'ejs');
+app.set("view engine", "ejs");
 // bach n9ra data mn form
 app.use(express.urlencoded({ extended: true }));
 //public fulder
 app.use(express.static("public"));
 
-
-
-// الصفحة الرئيسية
+// Get reqeust
 app.get("/", (req, res) => {
-
-    res.render("index", { });
- 
+  res.render("index", {});
 });
 app.get("/user/add.html", (req, res) => {
-
-  res.render("user/add", { });
-
+  res.render("user/add", {});
 });
 app.get("/user/view.html", (req, res) => {
-
-  res.render("user/view", { });
-
+  res.render("user/view", {});
 });
 app.get("/user/edit.html", (req, res) => {
-
-  res.render("user/edit", { });
-
+  res.render("user/edit", {});
 });
 
 app.get("/index.html", (req, res) => {
-  res.send("<h3>  send okey </h3>")
+  res.send("<h3>  send okey </h3>");
 });
 
+//post reqeust
 
+app.post("/user/add", (req, res) => {
+  const user = new User(req.body);
+  user
+    .save()
+    .then(() => {
+      res.redirect("/user/add");
+      console.log(req.body);
+
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+});
 
 // الاتصال بـ MongoDB localhost
 mongoose
@@ -51,5 +55,3 @@ mongoose
   .catch((err) => {
     console.log("❌ MongoDB Connection Error:", err.message);
   });
-
-  
