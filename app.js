@@ -24,9 +24,12 @@ app.get("/", (req, res) => {
 app.get("/user/add.html", (req, res) => {
   res.render("user/add", {});
 });
-app.get("/user/view.html", (req, res) => {
-  res.render("user/view", {});
-});
+
+
+//get reqeust
+
+
+
 app.get("/user/edit.html", (req, res) => {
   res.render("user/edit", {});
 });
@@ -49,6 +52,24 @@ app.post("/user/add", (req, res) => {
       console.log(err);
     });
 });
+
+
+// route باش تشوف تفاصيل المستخدم
+app.get("/user/:id", async (req, res) => {
+
+    User.findById(req.params.id)
+    .then((result) => {
+      res.render("user/view", {obj: result });
+    }) 
+    
+
+  .catch((err) => { 
+
+    console.error(err);
+  }) ;
+
+});
+
 
 // الاتصال بـ MongoDB localhost
 mongoose
