@@ -4,38 +4,53 @@ const User = require("./models/CustomerSchema"); // schema dyalek
 const app = express();
 const port = process.env.PORT || 3000;
 app.set("view engine", "ejs");
-// bach n9ra data mn form
 app.use(express.urlencoded({ extended: true }));
-//public fulder
 app.use(express.static("public"));
+var moment = require("moment");
+var methodOverride = require("method-override");
+app.use(methodOverride("_method"));
 
 // Get reqeust
 app.get("/", (req, res) => {
   User.find()
     .then((result) => {
-      res.render("index", {arr: result});
+      res.render("index", { arr: result, moment: moment });
     })
     .catch((err) => {
       console.log(err);
     });
 });
 
-
 app.get("/user/add.html", (req, res) => {
   res.render("user/add", {});
 });
 
-
 //get reqeust
-
-
-
-app.get("/user/edit.html", (req, res) => {
-  res.render("user/edit", {});
-});
 
 app.get("/index.html", (req, res) => {
   res.send("<h3>  send okey </h3>");
+});
+
+app.get("/edit/:id", (req, res) => {
+  User.findById(req.params.id)
+    .then((result) => {
+      res.render("user/edit", { obj: result, moment: moment });
+    })
+
+    .catch((err) => {
+      console.error(err);
+    });
+});
+// route باش تشوف تفاصيل المستخدم
+app.get("/view/:id", async (req, res) => {
+  User.findById(req.params.id)
+    .then((result) => {
+      res.render("user/view", { obj: result, moment: moment });
+    })
+
+    .catch((err) => {
+      console.error(err);
+    });
 });
 
 //post reqeust
@@ -53,23 +68,17 @@ app.post("/user/add", (req, res) => {
     });
 });
 
+//Delete request
+app.delete("/edit/:id", (req, res) => {
+  User.findByIdAndDelete(req.params.id)
 
-// route باش تشوف تفاصيل المستخدم
-app.get("/user/:id", async (req, res) => {
-
-    User.findById(req.params.id)
-    .then((result) => {
-      res.render("user/view", {obj: result });
-    }) 
-    
-
-  .catch((err) => { 
-
-    console.error(err);
-  }) ;
-
+    .then(() => {
+      res.redirect("/");
+    })
+    .catch((err) => {
+      console.log(err);
+    });
 });
-
 
 // الاتصال بـ MongoDB localhost
 mongoose

@@ -10,7 +10,9 @@ phoneNumer: String,
 age: String,
 country: String,
 gender: String,
-});
+}, 
+{timestamps: true}
+);
 
 const User = mongoose.model("customer", userSchema);
 

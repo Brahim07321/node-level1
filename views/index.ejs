@@ -6,7 +6,7 @@
       rel="stylesheet"
       href="./bootstrap-icons-1.10.5/font/bootstrap-icons.min.css"
     />
-    <link rel="shortcut icon" href="./img/ali.png" type="image/x-icon">
+    <link rel="shortcut icon" href="./img/ali.png" type="image/x-icon" />
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content="" />
@@ -18,7 +18,7 @@
     <title>Home page</title>
 
     <link href="./css/bootstrap.min.css" rel="stylesheet" />
-    <link rel="stylesheet" href="./css/dark-light.css">
+    <link rel="stylesheet" href="./css/dark-light.css" />
 
     <!-- Custom styles for this template -->
     <link href="./css/sidebars.css" rel="stylesheet" />
@@ -30,10 +30,9 @@
     <main class="d-flex flex-nowrap">
       <%- include('./Components/saidbar.ejs', {currentPage: "index"}) %>
 
-
       <section class="w-100">
         <%- include('./Components/navbar.ejs') %>
-   
+
         <table
           style="width: 99%"
           class="text-center mx-auto table mt-5 table-striped table-bordered"
@@ -51,33 +50,40 @@
           </thead>
           <tbody>
             <% arr.forEach((item, index) => { %>
-              <tr>
-                <th scope="row"><%= index +1 %></th>
-                <td> <%= item.firstName %>	<%= item.lastName %></td>
-                <td><%= item.gender %>	</td>
-                <td><%= item.country %></td>
-                <td><%= item.age %></td>
-                <td>1 days ago              </td>
-                <td>
-                  <a
-                    data-bs-toggle="tooltip"
-                    data-bs-title="View details"
-                    data-bs-placement="top"
-                    class="btn btn-primary btn-sm"
-                    href="/user/<%= item._id %>"
-                    ><i class="bi bi-eye"></i
-                  ></a>
-  
-                  <a
-                    data-bs-toggle="tooltip"
-                    data-bs-title="Edit user"
-                    data-bs-placement="top"
-                    class="btn btn-primary btn-sm"
-                    href="./user/edit.html"
-                  >
-                    <i class="bi bi-pencil"></i>
-                  </a>
+            <tr>
+              <th scope="row"><%= index +1 %></th>
+              <td><%= item.firstName %> <%= item.lastName %></td>
+              <td><%= item.gender %></td>
+              <td><%= item.country %></td>
+              <td><%= item.age %></td>
+              <td><%= moment(item.updatedAt).fromNow(); %></td>
+              <td>
+                <a
+                  data-bs-toggle="tooltip"
+                  data-bs-title="View details"
+                  data-bs-placement="top"
+                  class="btn btn-primary btn-sm"
+                  href="/view/<%= item._id %>"
+                  ><i class="bi bi-eye"></i
+                ></a>
+
+                <a
+                  data-bs-toggle="tooltip"
+                  data-bs-title="Edit user"
+                  data-bs-placement="top"
+                  class="btn btn-primary btn-sm"
+                  href="/edit/<%= item._id %>"
+                >
+                  <i class="bi bi-pencil"></i>
+                </a>
+                <form
+                  style="display: inline"
+                  action="/edit/<%= item._id %>?_method=DELETE"
+                  method="post"
+                >
                   <button
+                    type="submit"
+                    class="btn btn-danger"
                     data-bs-toggle="tooltip"
                     data-bs-title="Delete user"
                     data-bs-placement="top"
@@ -85,11 +91,10 @@
                   >
                     <i class="bi bi-trash"></i>
                   </button>
-                </td>
-              </tr>
+                </form>
+              </td>
+            </tr>
             <% }) %>
-            
-      
           </tbody>
         </table>
       </section>

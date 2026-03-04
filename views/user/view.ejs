@@ -44,7 +44,7 @@
           <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="/">Home</a></li>
             <li class="breadcrumb-item active" aria-current="page">
-              <%= obj.firstName %><%= obj.lastName %>
+              <%= obj.firstName %> <%= obj.lastName %>
             </li>
           </ol>
 
@@ -98,12 +98,14 @@
 
             <tr>
               <th scope="row">Created on</th>
-              <td>Test6</td>
+              <td><%= moment(obj.createdAt).format("MMM Do YYYY, h:mn a"); %></td>
+
             </tr>
 
             <tr>
               <th scope="row">Last Update</th>
-              <td>Test7</td>
+              <td><%= moment(obj.updatedAt).fromNow(); %></td>
+
             </tr>
           </tbody>
         </table>
