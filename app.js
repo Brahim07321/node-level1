@@ -66,6 +66,21 @@ app.post("/user/add", (req, res) => {
     });
 });
 
+//for search
+app.post("/search", (req, res) => {
+  console.log("****************************");
+const saerchText =req.body.saerchText.trim()
+  User.find({$or: [{ firstName: saerchText}, { lastName: saerchText}]})
+    .then((result) => {
+     
+      console.log(result);
+      res.render("user/search", { arr: result, moment: moment });
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+});
+
 //Delete request
 app.delete("/edit/:id", (req, res) => {
   User.findByIdAndDelete(req.params.id)
